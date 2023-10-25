@@ -1,0 +1,596 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENU</title>
+<style>
+    .card {
+        border: 1px solid #e0e0e0;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .time {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .event-name,
+    .details {
+        color: white;
+        font-size: larger;
+    }
+
+
+    .event-day h2:before {
+        left: 10px;
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 10px solid white;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        margin-right: 10px;
+    }
+
+    .event-day.expanded h2:before {
+        transform: translateY(-50%) rotate(90deg);
+    }
+
+    .event-day:last-of-type {
+        margin-bottom: 50px;
+        /* Adjust this value as needed */
+    }
+
+    .event-day h2 {
+        color: white;
+        font-size: larger;
+        padding: 10px 0;
+        padding-left: 30px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .event-day:last-of-type {
+        padding-bottom: 50px;
+        /* Adjust this value as needed */
+    }
+
+    .non-collapsible {
+        padding: 10px;
+        color: white;
+    }
+
+    .non-collapsible h3 {
+        margin-top: 20px;
+        color: white
+    }
+
+    .non-collapsible p {
+        color: white;
+        font-size: larger;
+    }
+
+    p,
+    h1,
+    h2 {
+        color: white;
+    }
+
+    .event-type {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    .location {
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .menu-item {
+        margin-left: 15px;
+    }
+
+    .bp-eyebrow.larger {
+        font-size: 1.5em;
+    }
+</style>
+<script defer>
+
+    var menuData = [
+        {
+            "day": "Monday, 30th Oct., 2023",
+            "events": [
+                {
+                    "type": "Opening Mixer",
+                    "time": "16:00-20:00",
+                    "location": "Innovator Stage",
+                    "items": [
+                        "Pita Bar with sandwiches (vegan option)",
+                        "Eastern Kitchen with dim sum (vegan option)",
+                        "Charcuterie and cheese",
+                        "Table bites",
+                        "Wine and beer",
+                        "Coffee and tea",
+                        "Soft drinks and water"
+                    ]
+                }
+            ]
+        },
+        {
+            "day": "Tuesday, 31st Oct., 2023",
+            "events": [
+                {
+                    "type": "Coffee",
+                    "time": "9:00-18:00",
+                    "location": "All stages",
+                    "items": ["Barista", "Self-serve"]
+                },
+                {
+                    "type": "Breakfast",
+                    "time": "9:00-10:00",
+                    "location": "All stages",
+                    "items": ["Fruit", "Nature Valley Muesli Bars"]
+                },
+                {
+                    "type": "Lunch",
+                    "locations": [
+                        {
+                            "time": "12:30-14:30",
+                            "location": "All stages",
+                            "items": []
+                        },
+                        {
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": [
+                                "Sandwich Bar (vegan option)",
+                                "Bowl Station (vegan)",
+                                "Curry (vegan option)",
+                                "Soup Station (vegan)",
+                                "Risotto",
+                                "Gnocchi",
+                                "Mezze Bar",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": [
+                                "Flatbread Bar",
+                                "Taqueria",
+                                "Veggie Station",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": [
+                                "Bun Bar",
+                                "Pasta",
+                                "Flammkuchen",
+                                "The FEBO Wall",
+                                "Allergen-Friendly Food Station",
+                                "Sate Bar",
+                                "Sweets",
+                                "Soft drinks and water"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Afternoon Break",
+                    "locations": [
+                        {
+                            // "time": "15:55-16:25",
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "16:40-17:05",
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "15:55-16:25",
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": ["Popcorn", "Mini-bite pretzels"]
+                        }
+                    ]
+                },
+                {
+                    "type": "Selecta Smart Fridges",
+                    "items": ["Red Bull and snacks available for purchase"]
+                }
+            ]
+        },
+        {
+            "day": "Wednesday, 1st Nov., 2023",
+            "events": [
+                {
+                    "type": "Coffee",
+                    "time": "9:00-18:00",
+                    "location": "All stages",
+                    "items": ["Barista", "Self-serve"]
+                },
+                {
+                    "type": "Breakfast",
+                    "time": "9:00-10:00",
+                    "location": "All stages",
+                    "items": ["Nature Valley Muesli Bars"]
+                },
+                {
+                    "type": "Lunch",
+                    "locations": [
+                        {
+                            "time": "12:30-14:30",
+                            "location": "All stages",
+                            "items": []
+                        },
+                        {
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": [
+                                "Sandwich Bar (vegan option)",
+                                "Bowl Station (vegetarian option)",
+                                "Curry (vegan option)",
+                                "Soup Station (vegan option)",
+                                "Risotto",
+                                "Gnocchi",
+                                "Mezze Bar",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": [
+                                "Flatbread Bar (vegetarian option)",
+                                "Taqueria",
+                                "Veggie Station",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": [
+                                "Bun Bar (vegan option)",
+                                "Pasta (vegetarian option)",
+                                "Pizza (vegetarian option)",
+                                "Pad Thai (vegetarian option)",
+                                "The FEBO Wall",
+                                "Allergen-Friendly Food Station",
+                                "Sweets",
+                                "Soft drinks and water"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Afternoon Break",
+                    "locations": [
+                        {
+                            // "time": "15:50-16:20",
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "16:15-16:45",
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "16:00-16:30",
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": ["Potato chips", "Dried fruit"]
+                        }
+                    ]
+                },
+                {
+                    "type": "Selecta Smart Fridges",
+                    "items": ["Red Bull and snacks available for purchase"]
+                }
+            ]
+        },
+        {
+            "day": "Thursday, 2nd Nov., 2023",
+            "events": [
+                {
+                    "type": "Coffee",
+                    "time": "9:00-18:00",
+                    "location": "All stages",
+                    "items": ["Barista", "Self-serve"]
+                },
+                {
+                    "type": "Breakfast",
+                    "time": "9:00-10:00",
+                    "location": "All stages",
+                    "items": ["Fruit", "Nature Valley Muesli Bars"]
+                },
+                {
+                    "type": "Lunch",
+                    "locations": [
+                        {
+                            "time": "12:30-14:30",
+                            "location": "All stages",
+                            "items": []
+                        },
+                        {
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": [
+                                "Sandwich Bar (vegan option)",
+                                "Bowl Station (vegetarian option)",
+                                "Curry (vegan option)",
+                                "Soup Station (vegan)",
+                                "Risotto",
+                                "Gnocchi",
+                                "Mezze Bar",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": [
+                                "Flatbread Bar (vegetarian option)",
+                                "Taqueria",
+                                "Veggie Station",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": [
+                                "Bun Bar",
+                                "Pasta (vegetarian option)",
+                                "Pizza (vegetarian option)",
+                                "Flammkuchen",
+                                "The FEBO Wall",
+                                "Sate Bar (vegetarian option)",
+                                "Allergen-Friendly Food Station",
+                                "Sweets",
+                                "Soft drinks and water"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Afternoon Break",
+                    "locations": [
+                        {
+                            // "time": "15:55-16:25",
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "16:35-17:05",
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": []
+                        },
+                        {
+                            // "time": "15:55-16:25",
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": ["Popcorn", "Mini-bite pretzels"]
+                        }
+                    ]
+                },
+                {
+                    "type": "Selecta Smart Fridges",
+                    "items": ["Red Bull and snacks available for purchase"]
+                }
+            ]
+        },
+        {
+            "day": "Friday, 3rd Nov., 2023",
+            "events": [
+                {
+                    "type": "Coffee",
+                    "time": "9:00-16:30",
+                    "location": "All stages",
+                    "items": ["Barista", "Self-serve"]
+                },
+                {
+                    "type": "Breakfast",
+                    "time": "9:00-10:00",
+                    "location": "All stages",
+                    "items": ["Fruit", "Nature Valley Muesli Bars"]
+                },
+                {
+                    "type": "Lunch",
+                    "locations": [
+                        {
+                            "time": "12:30-14:30",
+                            "location": "All stages",
+                            "items": []
+                        },
+                        {
+                            "time": null,
+                            "location": "Main Stage",
+                            "items": [
+                                "Sandwich Bar (vegan option)",
+                                "Bowl Station (vegetarian option)",
+                                "Curry (vegan option)",
+                                "Soup Station (vegan option)",
+                                "Risotto",
+                                "Gnocchi",
+                                "Mezze Bar",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Developer Stage",
+                            "items": [
+                                "Flatbread Bar (vegetarian option)",
+                                "Taqueria",
+                                "Veggie Station",
+                                "Soft drinks and water"
+                            ]
+                        },
+                        {
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": [
+                                "Bun Bar",
+                                "Pasta",
+                                "Flammkuchen",
+                                "The FEBO Wall",
+                                "Allergen-Friendly Food Station",
+                                "Sweets",
+                                "Soft drinks and water"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Afternoon Break",
+                    "locations": [
+                        // {
+                        //     "time": "15:00-15:30",
+                        //     "location": "Main Stage",
+                        //     "items": []
+                        // },
+                        // {
+                        //     "time": "15:15-15:45",
+                        //     "location": "Developer Stage",
+                        //     "items": []
+                        // },
+                        {
+                            // "time": "15:50-16:20",
+                            "time": null,
+                            "location": "Innovator Stage",
+                            "items": ["Potato chips", "Dried fruit"]
+                        }
+                    ]
+                },
+                {
+                    "type": "Selecta Smart Fridges",
+                    "items": ["Red Bull and snacks available for purchase"]
+                }
+            ]
+        }
+    ];
+
+
+    function generateMenu(menuData, containerId) {
+        let bodyElement = document.body;
+        let container = document.createElement('div');
+        container.id = containerId;
+        bodyElement.appendChild(container);
+
+        let titleElem = document.createElement('h1');
+        titleElem.innerText = "Menu";
+        container.appendChild(titleElem);
+
+        // Add your custom text here
+        let customText = document.createElement('p');
+        customText.innerText = "A delicious menu with vegan and allergen-friendly options will be available every day at Breakpoint 2023."; // Modify this text as needed
+        customText.className = "non-collapsible";
+        container.appendChild(customText);
+
+        menuData.forEach(day => {
+            let dayContainer = document.createElement('div');
+            dayContainer.className = "event-day";
+
+            let dayHeader = document.createElement('h2');
+            dayHeader.innerText = day.day;
+            dayHeader.addEventListener('click', function () {
+                let events = this.nextElementSibling;
+                if (events.style.display === 'none' || !events.style.display) {
+                    events.style.display = 'block';
+                    this.parentElement.classList.add('expanded');
+                } else {
+                    events.style.display = 'none';
+                    this.parentElement.classList.remove('expanded');
+                }
+            });
+
+            let eventsContainer = document.createElement('div');
+            eventsContainer.className = "events";
+
+            if (day.day === "Monday, 30th Oct., 2023") {
+                eventsContainer.style.display = 'block';
+                dayContainer.classList.add('expanded');
+            } else {
+                eventsContainer.style.display = 'none';
+            }
+
+            dayContainer.appendChild(dayHeader);
+            dayContainer.appendChild(eventsContainer);
+            container.appendChild(dayContainer);
+
+            day.events.forEach(event => {
+                let card = document.createElement('div');
+                card.className = "card";
+
+                let eventTypeElem = document.createElement('div');
+                eventTypeElem.className = "event-type";
+                eventTypeElem.innerText = event.type;
+                card.appendChild(eventTypeElem);
+                if (event.locations) {
+                    event.locations.forEach(location => {
+                        let locationElem = document.createElement('div');
+                        locationElem.className = "bp-eyebrow larger";
+
+                        if (location.time) { // If there's a time, include it
+                            locationElem.innerText = location.location + ' (' + location.time + ')';
+                        } else { // Else, just show the location
+                            locationElem.innerText = location.location;
+                        }
+                        card.appendChild(locationElem);
+
+                        location.items.forEach(item => {
+                            let itemElem = document.createElement('div');
+                            itemElem.className = "menu-item";
+                            itemElem.innerText = item;
+                            card.appendChild(itemElem);
+                        });
+                    });
+                } else if (event.location && event.time) { // Check if location and time exist
+                    let locationElem = document.createElement('div');
+                    locationElem.className = "bp-eyebrow larger";
+                    locationElem.innerText = event.location + ' (' + event.time + ')';
+                    card.appendChild(locationElem);
+
+                    event.items.forEach(item => {
+                        let itemElem = document.createElement('div');
+                        itemElem.className = "menu-item";
+                        itemElem.innerText = item;
+                        card.appendChild(itemElem);
+                    });
+                } else {
+                    event.items.forEach(item => {
+                        let itemElem = document.createElement('div');
+                        itemElem.className = "menu-item";
+                        itemElem.innerText = item;
+                        card.appendChild(itemElem);
+                    });
+                }
+
+                eventsContainer.appendChild(card);
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        generateMenu(menuData, 'menuContainer');
+    });
+
+</script>
