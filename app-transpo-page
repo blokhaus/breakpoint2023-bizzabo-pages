@@ -124,14 +124,9 @@
         {
             "day": "Thursday, 2nd Nov.",
             "toSolana": [
-                "Depart <a href='https://maps.app.goo.gl/LyD2XG7QrYF6Va4e9'>IJCatcher</a> at 9:00, arrive 9:50",
                 "Depart <a href='https://maps.app.goo.gl/LyD2XG7QrYF6Va4e9'>IJCatcher</a> at 10:00, arrive 10:50",
-                "Depart <a href='https://maps.app.goo.gl/LyD2XG7QrYF6Va4e9'>IJCatcher</a> at 11:30, arrive 12:20",
                 "Depart <a href='https://maps.app.goo.gl/LyD2XG7QrYF6Va4e9'>IJCatcher</a> at 12:30, arrive 13:20"
             ],
-            "fromSolana": [
-                "Depart Solana Campus at 18:30, arrive 19:20"
-            ]
         },
         {
             "day": "Friday, 3rd Nov.",
@@ -229,10 +224,16 @@ function generateCombinedSchedule(boatSchedule, shuttleSchedule) {
             card.appendChild(transportTitle);
 
             let infoText = idx === 0 ? 'Cruise to campus in style! Take a boat with your fellow Breakpoint attendees. </p><p>(Beverages and pastries available for purchase at IJCatcher before you leave!)</p><p>Each one-way trip takes approximately 50 minutes.</p><p class="bp-text-green">Boarding begins 30 minutes prior to departure.</p>' : 'Get to campus as quickly as possible! Shuttle buses will be running every 15 minutes between Campus and central Amsterdam during operating hours indicated below. Each trip takes approximately 30 minutes.';
+            if (idx === 0 && data.day === 'Thursday, 2nd Nov.') {
+                infoText = 'Due to the windy conditions, we have adjusted the boat schedule on Nov. 2. Boarding begins 30 minutes prior to departure. Shuttles will be running normally!'
+            }
             let transportInfo = document.createElement('p');
             transportInfo.innerHTML = infoText;
             transportInfo.className = 'bp-copy';
             transportInfo.style.color = 'white';
+            if (idx === 0 && data.day === 'Thursday, 2nd Nov.') {
+                transportInfo.style.fontStyle = 'italic';
+            }
             card.appendChild(transportInfo);
 
             generateTransportSection(card, data, "To Solana Campus:", "To central Amsterdam:");
@@ -268,18 +269,21 @@ function generateTransportSection(card, dayData, toSolanaText, fromSolanaText) {
     });
 
     // From Solana
-    let fromSolanaHeader = document.createElement('h3');
-    fromSolanaHeader.innerHTML = fromSolanaText;  // Use innerHTML
-    fromSolanaHeader.style.color = 'white';
-    card.appendChild(fromSolanaHeader);
+    if (dayData.fromSolana.length > 0) {
+        let fromSolanaHeader = document.createElement('h3');
+        fromSolanaHeader.innerHTML = fromSolanaText;  // Use innerHTML
+        fromSolanaHeader.style.color = 'white';
+        card.appendChild(fromSolanaHeader);
 
-    dayData.fromSolana.forEach(trip => {
-        let tripElement = document.createElement('p');
-        tripElement.innerHTML = trip;  // Use innerHTML
-        tripElement.className = 'bp-list-item';
-        tripElement.style.color = 'white';
-        card.appendChild(tripElement);
+        dayData.fromSolana.forEach(trip => {
+            let tripElement = document.createElement('p');
+            tripElement.innerHTML = trip;  // Use innerHTML
+            tripElement.className = 'bp-list-item';
+            tripElement.style.color = 'white';
+            card.appendChild(tripElement);
     });
+    }
+    
 }
 
     function generateTransportSchedule(scheduleData, containerId, title, introText) {
