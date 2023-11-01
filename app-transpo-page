@@ -172,7 +172,7 @@
         {
             "day": "Friday, 3rd Nov.",
             "toSolana": ["8:30-13:00"],
-            "fromSolana": ["17:00-20:15"]
+            "fromSolana": ["15:00-19:00"]
         }
     ];
 
@@ -374,6 +374,23 @@ function generateTransportSection(card, dayData, toSolanaText, fromSolanaText) {
         document.body.appendChild(container);
     }
 
+    function copyToClipboard() {
+        const urlElem = document.getElementById("url");
+        const messageElem = document.getElementById("message");
+
+        const range = document.createRange();
+        range.selectNode(urlElem);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+
+        messageElem.textContent = "Copied!";
+        
+        setTimeout(() => {
+            messageElem.textContent = "";
+        }, 2000);
+    }
+
     function addNonCollapsibleContent() {
         let container = document.createElement('div');
         container.id = 'nonCollapsible';
@@ -426,7 +443,18 @@ and requires a ride on the <a href="https://reisinfo.gvb.nl/en/lijnen/F20/dienst
         let preamble = document.createElement('div');
         preamble.innerHTML = `
         <p>Getting to campus is a breeze! Transportation by boat and shuttle to the Solana Campus will be provided every day, connecting the Solana Campus to central Amsterdam. <b>Please note that while Solana Campus is accessible by car, there is extremely limited parking on site — we encourage you to take the provided transportation!</b></p>
-	<p>To board the boat, you’ll need to claim an NFT ticket designed by Nora Lightsilver! On October 30th and 31st, this will be accepted in lieu of your Breakpoint badge to board the shuttles to Breakpoint. <b>Claim your <a href="https://www.crossmint.com/collections/breakpoint-horizon/claim">NFT ticket here.</a></b></p>
+	<p>To board the boat, you’ll need to claim an NFT ticket designed by Nora Lightsilver! On October 30th and 31st, this will be accepted in lieu of your Breakpoint badge to board the shuttles to Breakpoint. </p>
+
+<style>
+    #url::before {
+        content: "📋 ";
+    }
+</style>
+
+<p><b>You'll be able to claim your NFT Ticket at IJCatcher before you board the shuttles or boat, or click to copy the web address below, then paste it into your browser or wallet:</b></p>
+<span id="url" style="font-weight: bold; cursor: pointer; border-bottom: 2px dotted #000; padding-left: 20px; position: relative;" onclick="copyToClipboard()" title="Click to copy">https://www.crossmint.com/collections/breakpoint-horizon/claim</span>
+<span id="message"></span>
+</p>
 
         <p><i>All boats and shuttles depart central Amsterdam from <a href="https://maps.app.goo.gl/LyD2XG7QrYF6Va4e9">IJCatcher.</a></i></p>
     `;
