@@ -225,7 +225,7 @@ function generateCombinedSchedule(boatSchedule, shuttleSchedule) {
 
             let infoText = idx === 0 ? 'Cruise to campus in style! Take a boat with your fellow Breakpoint attendees. </p><p>(Beverages and pastries available for purchase at IJCatcher before you leave!)</p><p>Each one-way trip takes approximately 50 minutes.</p><p class="bp-text-green">Boarding begins 30 minutes prior to departure.</p>' : 'Get to campus as quickly as possible! Shuttle buses will be running every 15 minutes between Campus and central Amsterdam during operating hours indicated below. Each trip takes approximately 30 minutes.';
             if (idx === 0 && data.day === 'Thursday, 2nd Nov.') {
-                infoText = 'Due to the windy conditions, we have adjusted the boat schedule on Nov. 2. Shuttles will be running normally! Boarding begins 30 minutes prior to departure.'
+                infoText = 'Due to the windy conditions, we have adjusted the boat schedule on Nov. 2. Boarding begins 30 minutes prior to departure. Shuttles will be running normally!'
             }
             let transportInfo = document.createElement('p');
             transportInfo.innerHTML = infoText;
